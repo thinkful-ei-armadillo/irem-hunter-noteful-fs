@@ -12,7 +12,18 @@ function sanitize(folder) {
   };
 }
 
-foldersRouter.route('/noteful')
+foldersRouter.route('/notes-by-folder/:id')
+  .get((req, res) => {
+    const db = req.app.get('db');
+
+    return folders
+      .getFoldersNotes(db, req.params.id)
+      .then((data => {
+        res.json(data.map(sanitize));
+      }));
+  });
+
+foldersRouter.route('/folder')
   .get((req, res) => {
     const db = req.app.get('db');
 

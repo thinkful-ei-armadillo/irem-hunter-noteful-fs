@@ -33,7 +33,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch(config.API_ENDPOINT, {
+    fetch(`${config.API_ENDPOINT}/noteful`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -47,9 +47,46 @@ class App extends Component {
         return res.json()
       })
       .then(this.setNotes)
-      .then(this.setFolders)
-      .catch(error => this.setState({ error }))
+      .catch(error => this.setState({ error }));
+      
+      fetch(`${config.API_ENDPOINT}/folder`, {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${config.API_KEY}`
+        }
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(res.status)
+          }
+          return res.json()
+        })
+        .then(this.setFolders)
+        .catch(error => this.setState({ error }))
   };
+
+  // renderNotesByFolder = (id) => {
+  //   const { notes, folders } = this.state
+  //   return (
+  //     <>
+  //     {['/', `/folder/:${id}`].map(path =>
+  //     <Route
+  //       exact
+  //       key={path}
+  //       path={path}
+  //       render={routeProps =>
+  //         <NoteListNav
+  //           folders={folders}
+  //           notes={notes.find(notes => notes.folderid = id)}
+  //           {...routeProps}
+  //         />
+  //       }
+  //     />
+  //     )}
+  //     </>
+  //   )
+  // }
     // setTimeout(() => this.setState(dummyStore), 600)
 
   renderNavRoutes() {
