@@ -10,7 +10,7 @@ function sanitize(note) {
     id : note.id,
     name : xss(note.name),
     modified : xss(note.modified),
-    folderId : note.folderId,
+    folderId : note.folderid,
     content : xss(note.content)
   };
 }
