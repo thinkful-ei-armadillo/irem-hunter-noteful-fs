@@ -8,6 +8,8 @@ VALUES
     (125, 'Spangley');
 
 COMMIT;
+
+-- ALTER SEQUENCE folders_id_seq RESTART WITH 126;
   
 BEGIN;
 

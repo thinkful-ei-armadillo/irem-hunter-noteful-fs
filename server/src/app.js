@@ -6,9 +6,8 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const { NODE_ENV } = require('./config');
-const NotesService = require('../service/notes-service');
-const FoldersService = require('../service/folders-service');
-const xss = require('xss');
+const notesRouter = require('../router/notes-router');
+const foldersRouter = require('../router/folders-router');
 
 const app = express();
 const router = express.Router();
@@ -25,16 +24,8 @@ app.use(helmet());
 app.use(cors());
 
 app.use(express.json());
-
-function sanitize(note) {
-  return {
-    id : note.id,
-    name : xss(note.name),
-    modified : xss(note.modified),
-    folderId : note.folderId,
-    content : xss(note.content)
-  };
-}
+app.use('/api',notesRouter);
+app.use('/api',foldersRouter);
 
 app.use((req,res,next)=> {
   const authToken = req.get('Authorization');
@@ -43,33 +34,6 @@ app.use((req,res,next)=> {
   }
   next();
 });
-
-router.route('/notes')
-  .get((req, res) => {
-    const db = req.app.get('db');
-
-    return notes
-      .getAllNotes(db)
-      .then((data => {
-        res.json(data.map(sanitize));
-      }));
-  })
-  .post((req, res) => {
-    const { id, name, modified, folderId, content } = req.body;
-
-    const note = {
-      id,
-      name,
-      modified,
-      folderId,
-      content
-    };
-    const db = req.app.get('db');
-
-    notes.createNote(db, note).then(resjson => {
-      res.status(200).json(resjson);
-    });
-  });
 
 app.use(function ErrorHandler(error, req, res, next) {
   let response;
