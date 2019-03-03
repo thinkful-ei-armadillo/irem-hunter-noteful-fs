@@ -12,7 +12,7 @@ function sanitize(folder) {
   };
 }
 
-foldersRouter.route('/notes-by-folder/:id')
+foldersRouter.route('/folder/:id')
   .get((req, res) => {
     const db = req.app.get('db');
 

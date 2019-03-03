@@ -24,9 +24,7 @@ notesRouter.route('/noteful')
       .then((data => {
         res.json(data.map(sanitize));
       }));
-  });
-
-notesRouter.route('/add-note')
+  })
   .post((req, res) => {
     const { id, name, modified, folderId, content } = req.body;
 

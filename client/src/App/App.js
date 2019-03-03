@@ -66,28 +66,19 @@ class App extends Component {
         .catch(error => this.setState({ error }))
   };
 
-  // renderNotesByFolder = (id) => {
-  //   const { notes, folders } = this.state
-  //   return (
-  //     <>
-  //     {['/', `/folder/:${id}`].map(path =>
-  //     <Route
-  //       exact
-  //       key={path}
-  //       path={path}
-  //       render={routeProps =>
-  //         <NoteListNav
-  //           folders={folders}
-  //           notes={notes.find(notes => notes.folderid = id)}
-  //           {...routeProps}
-  //         />
-  //       }
-  //     />
-  //     )}
-  //     </>
-  //   )
-  // }
-    // setTimeout(() => this.setState(dummyStore), 600)
+  addNote = (note) => {
+    const newNote = {
+      id: note.id,
+      name: note.name,
+      content: note.content,
+      folderId: note.folderId,
+      modified: note.modified
+    }
+
+    this.setState({
+      notes: [...this.state.notes, newNote]
+    })
+  }
 
   renderNavRoutes() {
     const { notes, folders } = this.state

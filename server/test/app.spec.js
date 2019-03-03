@@ -16,9 +16,9 @@ describe('App', () => {
 
   after('disconnect from db', () => db.destroy());
   
-  before('clean the table', () => db('bookmarks').truncate());
+  before('clean the table', () => db('noteful-test').truncate());
 
-  afterEach('delete bookmarks', ()=> db('bookmarks').truncate());
+  afterEach('delete bookmarks', ()=> db('noteful-test').truncate());
 
   context('Given there are data in the database', ()=>{
 
