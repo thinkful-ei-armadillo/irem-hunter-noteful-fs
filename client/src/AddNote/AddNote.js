@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import NotefulForm from '../NotefulForm/NotefulForm'
 import './AddNote.css';
 import config from '../config';
-import context from '../context';
+import NotefulContext from '../context';
 
 export default class AddNote extends Component {
   constructor(props){
@@ -13,7 +13,7 @@ export default class AddNote extends Component {
     content: ''
   }
 }
-  static contextType = context;
+  static contextType = NotefulContext;
   
   chooseId(folderId) {
     this.setState({folderId: Number(folderId)})};
@@ -33,7 +33,6 @@ export default class AddNote extends Component {
       folderid: this.state.folderId,
       modified: new Date(),
     };
-    console.log(newNote);
     fetch(`${config.API_ENDPOINT}/noteful`,{
       method: 'POST',
       headers: {
@@ -43,14 +42,11 @@ export default class AddNote extends Component {
       body: JSON.stringify(newNote),
     })
     .then(res =>{
-      console.log(res)
       if(res.ok) {
-        console.log(res)
         return res.json()}
       else  throw new Error(res.status);
       })
     .then(note => {
-      console.log(note)
       this.context.addNote(note)
       this.props.history.push('/')
     })

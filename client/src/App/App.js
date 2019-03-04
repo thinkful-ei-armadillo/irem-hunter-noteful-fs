@@ -11,6 +11,7 @@ import AddNote from '../AddNote/AddNote'
 import { getNotesForFolder, findNote, findFolder } from '../notes-helpers'
 import './App.css'
 import config from '../config';
+import NotefulContext from '../context';
 
 class App extends Component {
   state = {
@@ -67,14 +68,6 @@ class App extends Component {
   };
 
   addNote = (note) => {
-    // const newNote = {
-    //   id: note.id,
-    //   name: note.name,
-    //   content: note.content,
-    //   folderid: note.folderId,
-    //   modified: note.modified
-    // }
-
 
     this.setState({
       notes: [...this.state.notes, note]
@@ -180,8 +173,13 @@ class App extends Component {
   }
 
   render() {
+    const contextValue={ 
+      notes: this.state.notes,
+      folders: this.state.folders,
+      addNote: this.addNote };
     return (
       <div className='App'>
+        <NotefulContext.Provider value={contextValue}>
         <nav className='App__nav'>
           {this.renderNavRoutes()}
         </nav>
@@ -195,6 +193,7 @@ class App extends Component {
         <main className='App__main'>
           {this.renderMainRoutes()}
         </main>
+        </NotefulContext.Provider>  
       </div>
     )
   }
