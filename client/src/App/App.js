@@ -67,17 +67,19 @@ class App extends Component {
   };
 
   addNote = (note) => {
-    const newNote = {
-      id: note.id,
-      name: note.name,
-      content: note.content,
-      folderId: note.folderId,
-      modified: note.modified
-    }
+    // const newNote = {
+    //   id: note.id,
+    //   name: note.name,
+    //   content: note.content,
+    //   folderid: note.folderId,
+    //   modified: note.modified
+    // }
+
 
     this.setState({
-      notes: [...this.state.notes, newNote]
+      notes: [...this.state.notes, note]
     })
+    console.log(this.state.notes)
   }
 
   renderNavRoutes() {

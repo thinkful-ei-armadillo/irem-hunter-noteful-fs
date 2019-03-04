@@ -30,7 +30,7 @@ export default class AddNote extends Component {
     const newNote={
       name: this.state.name,
       content: this.state.content,
-      folderId: this.state.folderId,
+      folderid: this.state.folderId,
       modified: new Date(),
     };
     console.log(newNote);
@@ -50,6 +50,7 @@ export default class AddNote extends Component {
       else  throw new Error(res.status);
       })
     .then(note => {
+      console.log(note)
       this.context.addNote(note)
       this.props.history.push('/')
     })

@@ -26,13 +26,12 @@ notesRouter.route('/noteful')
       }));
   })
   .post((req, res) => {
-    const { id, name, modified, folderId, content } = req.body;
+    const { name, modified, folderid, content } = req.body;
 
     const note = {
-      id,
       name,
       modified,
-      folderId,
+      folderid,
       content
     };
     const db = req.app.get('db');
